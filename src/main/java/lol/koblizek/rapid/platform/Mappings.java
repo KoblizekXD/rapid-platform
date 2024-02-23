@@ -2,7 +2,29 @@ package lol.koblizek.rapid.platform;
 
 public final class Mappings {
 
-    private Mappings() {}
+    private final IMappingProvider provider;
+    private final GameVersion version;
+    private final Format format;
+
+    Mappings(IMappingProvider provider, GameVersion version, Format format) {
+        if (!provider.isSupported(version, format))
+            throw new IllegalArgumentException("Unsupported provider, version or format");
+        this.provider = provider;
+        this.version = version;
+        this.format = format;
+    }
+
+    public IMappingProvider getProvider() {
+        return provider;
+    }
+
+    public GameVersion getVersion() {
+        return version;
+    }
+
+    public Format getFormat() {
+        return format;
+    }
 
     // TODO - Ranging versions are only temporary, they should be replaced with proper version ranges,
     // actually corrected
